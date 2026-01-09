@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DiaCalendario } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,75 @@ export class CalculadoraService {
     '2026-05-04'
   ];
 
+  // Genera el calendario de 1 año
+  generarYearCompleto(year: number): DiaCalendario[][] {
+    const meses:  DiaCalendario[][] = [];
+    
+    for (let mes = 0; mes < 12; mes++) {
+      meses.push(this.generarDiasMes(year, mes));
+    }
+    
+    return meses;
+  }
+
+  // Generar los diasa del mes
+  private generarDiasMes(year: number, mes: number): DiaCalendario[] {
+    const dias: DiaCalendario[] = [];
+    
+    // Primer dia del mes
+    const primerDia = new Date(year, mes, 1);
+    const primerDiaSemana = primerDia.getDay();
+    
+    // Último dia del mes
+    const ultimoDia = new Date(year, mes + 1, 0);
+    const diasDelMes = ultimoDia.getDate();
+    
+    // Añadir dias vacios al principio
+    const diasVaciosAlInicio = primerDiaSemana === 0 ? 6 : primerDiaSemana - 1;
+    for (let i = diasVaciosAlInicio; i > 0; i--) {
+      const fecha = new Date(year, mes, 1 - i);
+      dias.push(this.crearDiaCalendario(fecha, false));
+    }
+    
+    // Añadir todos los dias del mes
+    for (let dia = 1; dia <= diasDelMes; dia++) {
+      const fecha = new Date(year, mes, dia);
+      dias.push(this.crearDiaCalendario(fecha, true));
+    }
+    
+    // Completar la última semana con los días vacios de la siguiente
+    const diasTotales = dias.length;
+    const DiasFinalesVacios = diasTotales % 7 === 0 ? 0 : 7 - (diasTotales % 7);
+    for (let i = 1; i <= DiasFinalesVacios; i++) {
+      const fecha = new Date(year, mes + 1, i);
+      dias.push(this.crearDiaCalendario(fecha, false));
+    }
+    
+    return dias;
+  }
+
+  // Crear un objeto DiaCalendario a partir de una fecha
+  private crearDiaCalendario(fecha: Date, estaDentroDelMes: boolean): DiaCalendario {
+    return {
+      fecha: fecha,
+      numero: fecha.getDate(),
+      estaDentroDelMes: estaDentroDelMes,
+      esFinDeSemana: this.esFinDeSemana(fecha),
+      esFestivo: this.esFestivo(fecha),
+      esDiaPracticas: false,
+    };
+  }
+
+  // Devuelve el nombre del mes
+  getNombreMes(index: number): string {
+    const nombres = [
+      'Enero', 'Febrero', 'Marzo', 'Junio', 'Julio', 
+      'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ]
+
+    return nombres[index]
+  }
+
   // Comprobar si es fin de semana
   esFinDeSemana(fecha: Date): boolean {
     const dia = fecha.getDay();
@@ -67,7 +137,7 @@ export class CalculadoraService {
       fechaActual.setDate(fechaActual.getDate() + 1);
 
       // Si es laborable, incrementamos el contador
-      if (this.esDiaLaborable(fechaActual)) {
+      if (!this.esDiaLaborable(fechaActual)) {
         contadorDiasLaborables++;
       }
     }

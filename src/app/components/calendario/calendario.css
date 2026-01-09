@@ -1,0 +1,185 @@
+.calendari-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Formulari */
+.formulari-practiques {
+  background:  #f8f9fa;
+  padding:  20px;
+  border-radius:  8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.formulari-practiques h2 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+
+.camps-formulari {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.resultat {
+  background: #e8f4f8;
+  padding: 15px;
+  border-radius: 5px;
+  border-left: 4px solid #3498db;
+}
+
+.resultat p {
+  margin: 5px 0;
+}
+
+/* Calendari */
+.calendari-anys h3 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom:  20px;
+}
+
+.grid-mesos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.mes {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow:  0 2px 8px rgba(0,0,0,0.1);
+}
+
+.mes-header {
+  text-align: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #3498db;
+}
+
+.mes-header h4 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 18px;
+}
+
+/* Dies de la setmana */
+.dies-setmana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom:  5px;
+}
+
+.dia-setmana {
+  text-align: center;
+  font-weight: bold;
+  font-size: 12px;
+  color: #7f8c8d;
+  padding: 5px 0;
+}
+
+/* Grid de dies */
+.grid-dies {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.dia {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #ecf0f1;
+  color: #2c3e50;
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.dia:hover {
+  transform: scale(1.05);
+}
+
+/* Estats dels dies */
+.dia.fora-mes {
+  background: transparent;
+  color: #bdc3c7;
+}
+
+.dia.cap-setmana {
+  background: #d5dbdb;
+  color: #7f8c8d;
+}
+
+.dia.festiu {
+  background: #fadbd8;
+  color: #c0392b;
+  font-weight: bold;
+}
+
+.dia.dia-practiques {
+  background: #a8e6cf;
+  color: #27ae60;
+  font-weight: bold;
+  border: 2px solid #27ae60;
+}
+
+/* Llegenda */
+.llegenda {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.llegenda-item {
+  display:  flex;
+  align-items:  center;
+  gap: 8px;
+}
+
+.color-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.color-box.dia-practiques {
+  background: #a8e6cf;
+  border: 2px solid #27ae60;
+}
+
+.color-box.festiu {
+  background: #fadbd8;
+}
+
+.color-box.cap-setmana {
+  background:  #d5dbdb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .grid-mesos {
+    grid-template-columns: 1fr;
+  }
+  
+  .llegenda {
+    flex-direction:  column;
+    gap: 10px;
+  }
+}
